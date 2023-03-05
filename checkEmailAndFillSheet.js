@@ -7,8 +7,8 @@ function checkEmailAndFillSheet() {
   date.setDate(date.getDate() - 3);
   var dateString = Utilities.formatDate(date, Session.getScriptTimeZone(), 'yyyy/MM/dd');
 
-  // Get all the threads in the Gmail label or folder that were received in the last five days.
-  var threads = GmailApp.search('label:' + labelName + ' after:' + dateString+ ' is:unread');
+  // Get all the threads in the Gmail label or folder that were received in the last three days and are unread.
+  var threads = GmailApp.search('label:' + labelName + ' after:' + dateString + ' is:unread', 0, 500);
 
   // Create an empty array to store the links.
   var links = {};

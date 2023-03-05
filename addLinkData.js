@@ -8,7 +8,7 @@ function addLinkData() {
 
   // Loop through each row in the sheet.
   var numRows = sheet.getDataRange().getNumRows();
-  for (var i = 1; i < numRows; i++) {
+  for (var i = 1; i <= numRows; i++) {
     var key = sheet.getRange(i, 1).getValue();
     var url = sheet.getRange(i, 2).getValue();
 
