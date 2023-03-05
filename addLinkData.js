@@ -17,7 +17,7 @@ function addLinkData() {
       var rowData = [key, url, linkData[url].companyName,
         linkData[url].position,
         linkData[url].location,
-        linkData[url].jobType
+        linkData[url].posting
       ];
       sheet.getRange(i, 1, 1, 6).setValues([rowData]);
     }

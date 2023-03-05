@@ -6,13 +6,13 @@ function getLinkData() {
 
   if (sheet == null) {
     sheet = ss.insertSheet("Email Links");
-    sheet.appendRow(["Key, URL", "Company Name", "Role", "Location", "Type"]);
+    sheet.appendRow(["Key, URL", "Company Name", "Role", "Location", "Posting"]);
   }
 
   // Check if the sheet has any rows.
   var numRows = sheet.getDataRange().getNumRows();
   if (numRows == 0) {
-    sheet.appendRow(["Key, URL", "Company Name", "Role", "Location","Type"]);
+    sheet.appendRow(["Key, URL", "Company Name", "Role", "Location","Posting"]);
   }
 
   // Create an empty object to store the link data.
@@ -62,38 +62,23 @@ function getLinkData() {
       continue;
     }
 
-    var titleRegex = /<title>(.*?)<\/title>/i;
-    var titleMatches = response.getContentText().match(titleRegex);
-    var title = titleMatches != null ? titleMatches[1] : "";
+    const content = UrlFetchApp.fetch(url).getContentText()
+    const $ = Cheerio.load(content);
 
-    // Get the company name, position/role, and location from the page title using regular expressions.
-    var companyRegex = /^(.*?)\s*hiring/i;
-    var positionRegex = /hiring\s+(.*?)\s+in\s+/i;
-    var locationRegex = /,\s+(.*?)\s*\|\s+LinkedIn$/i;
-
-    var companyMatches = title.match(companyRegex);
-    var positionMatches = title.match(positionRegex);
-    var locationMatches = title.match(locationRegex);
-
-    var companyName = companyMatches != null ? companyMatches[1] : "";
-    var position = positionMatches != null ? positionMatches[1] : "";
-    var location = locationMatches != null ? locationMatches[1] : "";
-
-    var jobTypeRegex = /<span class="jobs-unified-top-card__workplace-type">(.+?)<\/span>/i;
-    var jobTypeMatches = response.getContentText().match(jobTypeRegex);
-    var jobType = jobTypeMatches != null ? jobTypeMatches[1] : "";
-
-    // Logger.log(response.getContentText())
-
+    var companyName = $('[data-tracking-control-name="public_jobs_topcard-org-name"]').first().text().trim();
+    var position = $('h1').first().text().trim(); 
+    var location = $('.topcard__flavor').eq(1).text().trim()
+    var posting = $('.show-more-less-html__markup').first().html()
+    
     // Add the link data to the link data object.
     linkData[url] = {
       companyName: companyName,
       position: position,
       location: location,
-      jobType: jobType
+      //jobType: jobType,
+      posting: posting
     };
 
-    Logger.log(linkData[url])
   }
 
   return linkData
