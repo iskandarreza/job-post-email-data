@@ -1,3 +1,16 @@
+/**
+ * The function gets all the URLs from the "Email Links" sheet, then loops through each URL and gets
+ * the company name, role, location, and posting from the page.
+ * @returns An an array of objects with the following properties:
+ * 
+ * {
+      companyName: companyName,
+      position: position,
+      location: location,
+      posting: posting
+    }
+ *  
+ */
 function getLinkData() {
   // Get all the URLs from the "Email Links" sheet.
   var ss = SpreadsheetApp.getActiveSpreadsheet();

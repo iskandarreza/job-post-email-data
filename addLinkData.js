@@ -1,3 +1,7 @@
+/**
+ * It loops through each row in the "Email Links" sheet, gets the URL in column B, and checks if the
+ * URL exists in the link data object. If it does, it writes the data to the row.
+ */
 function addLinkData() {
   // Get the link data object.
   var linkData = getLinkData();
