@@ -5,7 +5,7 @@ Script(s) to get job post links from specific label in Gmail, then send that dat
 2. `addLinkData()` adds the links to a specified Google Sheet
 3. `getLinkData()` fills the other data
 
-\* Work in progress, might use a proper tool like playwright/puppeteer for this later so we can auth with the LinkedIn API instead of checking out the public page (which kinda doesn't include some very useful data like if it's remote position or not
+\* Work in progress, might use a proper tool like playwright/puppeteer for this later so we can auth with the LinkedIn API instead of checking out the public page (which kinda doesn't include some very useful data like if it's remote position or not)
 
 
 Use this in the context of a Google Sheet by going to the **Extensions** menu and selecting **Apps Script**
