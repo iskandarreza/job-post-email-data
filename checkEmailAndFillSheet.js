@@ -1,3 +1,7 @@
+/**
+ * It gets all the unread emails in a Gmail label or folder, finds all the links in the emails, and
+ * saves the links to a Google Sheet
+ */
 function checkEmailAndFillSheet() {
   // Define the name of the Gmail label or folder where the emails are located.
   var labelName = "Jobs/LinkedIn Job Alert";
@@ -55,16 +59,21 @@ function checkEmailAndFillSheet() {
       sheet = ss.insertSheet("Email Links");
       sheet.appendRow(["Key", "URL"]);
     }
-    // Get the existing URLs in the sheet.
-    var existingUrls = sheet.getDataRange().getValues().slice(1).map(function (row) {
+    // Get the existing URLs and keys in the sheet.
+    var existingData = sheet.getDataRange().getValues().slice(1);
+    var existingUrls = existingData.map(function (row) {
       return row[1];
+    });
+    var existingKeys = existingData.map(function (row) {
+      return row[0];
     });
     // Add the new links to the sheet.
     var rowsToAdd = [];
     for (var key in links) {
       var url = links[key].url;
-      if (existingUrls.indexOf(url) == -1) {
-        rowsToAdd.push([links[key].key, url]);
+      var key = links[key].key;
+      if (existingUrls.indexOf(url) == -1 && existingKeys.indexOf(key) == -1) {
+        rowsToAdd.push([key, url]);
       }
     }
     if (rowsToAdd.length > 0) {
