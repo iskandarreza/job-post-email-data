@@ -122,7 +122,8 @@ function getLinksFromThreads(threads) {
               if (!links.hasOwnProperty(linkWithoutQueryString)) {
                 var companyName = $(this).find('tr').eq(1).find('span').eq(0).text().trim()
                 var role = $(this).find('tr').eq(0).text().trim()
-                var location = $(this).find('tr').eq(1).text().split('-')[1].trim()
+                var tr1 = $(this).find('tr').eq(1).text()
+                var location = tr1.split('-')[1] ? tr1.split('-')[1].trim() : tr1.trim()
                 var posting = $(this).find('tr').last().prev().text().trim()
                 links[linkWithoutQueryString] = {
                   'url': linkWithoutQueryString,
